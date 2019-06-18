@@ -16,7 +16,7 @@ def capturePackets(interface, time):
     time: time for timeout
     """
 
-    print("\n Packet  Capturing Started ")
+    print("\nPacket  Capturing Started ")
     capture = pyshark.LiveCapture(interface=interface, display_filter='icmpv6')
     capture.sniff(timeout=time)
 
@@ -49,7 +49,9 @@ def processPacket():
         if icmpv6Type == "135":
             print(" Target Address ->   ", packet.icmpv6.nd_ns_target_address)
             targetAddress = packet.icmpv6.nd_ns_target_address
-            if targetAddress is not "fe80::1":
+            print(type(targetAddress))
+
+            if str(targetAddress) != "fe80\:\:1":
                 # print(type(sourceLLA))
                 print("Target Address ->  ", targetAddress)
 
