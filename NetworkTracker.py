@@ -21,7 +21,7 @@ def capturePackets(interface, time):
     return capture
 
 def processPacket():
-    """
+    """This is packet porcessing
     It process the packets which involves following:
     1. Parse the ICMP layers packets 
     2. Fetch ICMP type 
