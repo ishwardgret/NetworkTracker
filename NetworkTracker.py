@@ -6,6 +6,8 @@ Copyright Ishwar Singh Bhandari
 import pyshark
 import db
 
+interface = 'en0'
+
 def capturePackets(interface, time):
     """
     Params:
@@ -14,7 +16,7 @@ def capturePackets(interface, time):
     time: time for timeout
     """
 
-    print("capture started")
+    print("\n Packet  Capturing Started ")
     capture = pyshark.LiveCapture(interface=interface, display_filter='icmpv6')
     capture.sniff(timeout=time)
 
@@ -29,22 +31,27 @@ def processPacket():
     4. Insert  to db table 
 
     """
+    # creating database 
+    # db.createDB()
+    # db.createTables()
+
+    # Flushing database
     db.truncateTAbles()
-    packets = capturePackets('en0', 60)
+
+    packets = capturePackets(interface, 60)
     print("Received Packets: ", packets)
 
     # looping on received packets 
     for packet in packets:
         icmpv6Type = packet.icmpv6.type
         print("ICMP Type : ", icmpv6Type)
-        # print("********** ", packet.ipv6.src.count)
 
         if icmpv6Type == "135":
-            print(" Target Address  ", packet.icmpv6.nd_ns_target_address)
+            print(" Target Address ->   ", packet.icmpv6.nd_ns_target_address)
             targetAddress = packet.icmpv6.nd_ns_target_address
             if targetAddress is not "fe80::1":
                 # print(type(sourceLLA))
-                print("********** ", targetAddress)
+                print("Target Address ->  ", targetAddress)
 
                 fetchDuplication = db.fetchDataFromLLADB(targetAddress)
 

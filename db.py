@@ -5,18 +5,14 @@ import mysql.connector
 host='localhost'
 user='root'
 password='password'
-database='mydatabase'
-
-def init():
-    createDB()
-    createTables()
+database='LLADADDB'
 
 def connection(host, user, password, database=None):
     if database is None:
-        print("1")
+        # print("1")
         myConnection = mysql.connector.connect(host=host, user=user, password=password)
     else:
-        print("2")
+        # print("2")
         myConnection = mysql.connector.connect(host=host, user=user, password=password, database=database)
 
     return myConnection
@@ -25,13 +21,15 @@ def createDB():
     mycon = connection(host, user, password) #mysql.connector.connect(host=host, user=user, password=password)    #connection(host, user, password)
     mycursor = mycon.cursor()
 
-    mycursor.execute("CREATE DATABASE IF NOT EXISTS mydatabase")
+    mycursor.execute("CREATE DATABASE IF NOT EXISTS LLADADDB")
     mycursor.execute("SHOW DATABASES")
 
-    for x in mycursor:
-        print(x)
+    print(" Created Database ")
 
-# createDB()
+    # To see the database instance print 
+
+    # for x in mycursor:
+    #     print(x)
 
 def createTables():
     """
@@ -39,13 +37,15 @@ def createTables():
         mycon = connection(host, user, password, database)
     except Exception:
         print("Error in MySQL connexion")
-    """
+
     mycon = mysql.connector.connect(
         host="localhost",
         user="root",
         password="password",
         database="mydatabase"
     )
+    """
+    mycon = connection(host, user, password, database)
 
     mycursor = mycon.cursor()
 
@@ -57,16 +57,7 @@ def createTables():
     DADDB_Query = "CREATE TABLE IF NOT EXISTS DADDB(ID int NOT NULL AUTO_INCREMENT, NA_ADDRESS VARCHAR(255),    PRIMARY KEY (ID))"
     mycursor.execute(DADDB_Query)
 
-# init()
-
-# def createTableDADDB():
-#     mycon = connection(host, user, password, database)
-
-#     mycursor = mycon.cursor()
-#     DADDB_Query = "CREATE TABLE DADDB(ID int NOT NULL AUTO_INCREMENT, NA_ADDRESS VARCHAR(255),    PRIMARY KEY (ID))"
-
-#     mycursor.execute(DADDB_Query)
-
+    print("Tables Created")
 
 
 def insertDataInLLADB(val):
@@ -126,7 +117,6 @@ def truncateTAbles():
 
 # createDB()
 # createTables()
-# createTableDADDB()
 # fetchDataFromLLADB("fe80::6c91:28fd:3971:3e87")
 # insertDataInDADDB("fe80::6c91:28fd:3971:3e87")
 # insertDataInLLADB("fe80::6c91:28fd:3971:3e87")
