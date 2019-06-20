@@ -62,5 +62,22 @@ def processPacket():
                     db.insertDataInLLADB(targetAddress)
                 else: 
                     db.insertDataInDADDB(targetAddress)
+        
+        elif icmpv6Type == "136":
+            print("Neighbour Advertisement Address -> ", packet.icmpv6.nd_na_target_address)
+            neighbourAdAddress = packet.icmpv6.nd_na_target_address
+
+            fetchAdAddress = db.fetchDataFromDADDB(neighbourAdAddress)
+            print(fetchAdAddress)
+            if not fetchAdAddress:
+                print("*****************")
+                print("Attack Confirmed")
+                print("*****************")
+            else:
+                print("*********************************")
+                print("Duplication Address Detected")
+                print("*********************************")
+
+
 
 processPacket()

@@ -2,7 +2,7 @@ import mysql.connector
 
 host='localhost'
 user='root'
-password='password'
+password='root'
 database='LLADADDB'
 
 def createDB():
@@ -12,6 +12,7 @@ def createDB():
     mycursor.execute("CREATE DATABASE IF NOT EXISTS LLADADDB")
     mycursor.execute("SHOW DATABASES")
 
+    mycon.close()
     # To see the database instance print 
 
     # for x in mycursor:
@@ -33,7 +34,8 @@ def createTables():
     mycursor.execute(DADDB_Query)
 
     print("Database Initializing Complete")
-
+    mycon.close()
+    
 def init():
     print("Initializing Database")
     createDB()

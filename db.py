@@ -4,7 +4,7 @@ import mysql.connector
 
 host='localhost'
 user='root'
-password='password'
+password='root'
 database='LLADADDB'
 
 def connection(host, user, password, database=None):
@@ -26,6 +26,7 @@ def createDB():
 
     print(" Created Database ")
 
+    mycon.close()
     # To see the database instance print 
 
     # for x in mycursor:
@@ -57,6 +58,8 @@ def createTables():
     DADDB_Query = "CREATE TABLE IF NOT EXISTS DADDB(ID int NOT NULL AUTO_INCREMENT, NA_ADDRESS VARCHAR(255),    PRIMARY KEY (ID))"
     mycursor.execute(DADDB_Query)
 
+    mycon.close()
+
     print("Tables Created")
 
 
@@ -73,6 +76,7 @@ def insertDataInLLADB(val):
 
     print(mycursor.rowcount, "record inserted.")
 
+    mycon.close()
 
 def insertDataInDADDB(val):
     mycon = connection(host, user, password, database)
@@ -85,6 +89,7 @@ def insertDataInDADDB(val):
 
     mycon.commit()
 
+    mycon.close()
     print(mycursor.rowcount, "record inserted.")
 
 def fetchDataFromLLADB(val):
@@ -100,6 +105,26 @@ def fetchDataFromLLADB(val):
     print(sql)
     print("Successful ", myresult)
 
+    mycon.close()
+    return myresult
+    # print(myresult)
+    # for x in myresult:
+    #     print(x)
+
+def fetchDataFromDADDB(val):
+    mycon = connection(host, user, password, database)
+
+    mycursor = mycon.cursor()
+
+    sql = "SELECT NA_ADDRESS FROM  DADDB WHERE NA_ADDRESS = '" + val + "'"
+    mycursor.execute(sql)
+
+    myresult = mycursor.fetchall()
+
+    print(sql)
+    print("Successful ", myresult)
+
+    mycon.close()
     return myresult
     # print(myresult)
     # for x in myresult:
@@ -114,6 +139,8 @@ def truncateTAbles():
     mycursor.execute(sql)
     mycursor.execute(sql2)
     print("Flushing database table")
+
+    mycon.close()
 
 # createDB()
 # createTables()
