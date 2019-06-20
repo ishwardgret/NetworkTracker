@@ -47,17 +47,17 @@ def processPacket():
         # print("ICMP Type : ", icmpv6Type)
 
         if icmpv6Type == "135":
-            print(" Target Address ->   ", packet.icmpv6.nd_ns_target_address)
+            # print(" Target Address ->   ", packet.icmpv6.nd_ns_target_address)
             targetAddress = packet.icmpv6.nd_ns_target_address
             # print(type(targetAddress))
 
             if str(targetAddress) != "fe80\:\:1":
                 # print(type(sourceLLA))
                 print("Target Address ->  ", targetAddress)
-                
+
                 fetchDuplication = db.fetchDataFromLLADB(targetAddress)
 
-                print(fetchDuplication)
+                # print(fetchDuplication)
                 if not fetchDuplication:
                     db.insertDataInLLADB(targetAddress)
                 else: 
@@ -71,11 +71,15 @@ def processPacket():
             neighbourAdAddress = packet.icmpv6.nd_na_target_address
 
             fetchAdAddress = db.fetchDataFromDADDB(neighbourAdAddress)
-            print(fetchAdAddress)
+            # print(fetchAdAddress)
             if not fetchAdAddress:
-                print("*****************")
-                print("Attack Confirmed =====>", neighbourAdAddress)
-                print("*****************")
+                # check whether address is in LLADB 
+                # attacker address never arrive in NS
+                isAdInNs = db.fetchDataFromLLADB(neighbourAdAddress)
+                if not isAdInNs:
+                    print("*****************")
+                    print("Attack Confirmed =====>", neighbourAdAddress)
+                    print("*****************")
             else:
                 print("*********************************")
                 print("Duplication Address Detected")
