@@ -44,12 +44,12 @@ def processPacket():
     # looping on received packets 
     for packet in packets:
         icmpv6Type = packet.icmpv6.type
-        print("ICMP Type : ", icmpv6Type)
+        # print("ICMP Type : ", icmpv6Type)
 
         if icmpv6Type == "135":
             print(" Target Address ->   ", packet.icmpv6.nd_ns_target_address)
             targetAddress = packet.icmpv6.nd_ns_target_address
-            print(type(targetAddress))
+            # print(type(targetAddress))
 
             if str(targetAddress) != "fe80\:\:1":
                 # print(type(sourceLLA))
@@ -71,7 +71,7 @@ def processPacket():
             print(fetchAdAddress)
             if not fetchAdAddress:
                 print("*****************")
-                print("Attack Confirmed")
+                print("Attack Confirmed =====>", neighbourAdAddress)
                 print("*****************")
             else:
                 print("*********************************")

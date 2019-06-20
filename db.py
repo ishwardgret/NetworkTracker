@@ -74,7 +74,7 @@ def insertDataInLLADB(val):
 
     mycon.commit()
 
-    print(mycursor.rowcount, "record inserted.")
+    print("Link Local Address --" + val + " inserted in LLA Database" )
 
     mycon.close()
 
@@ -90,7 +90,8 @@ def insertDataInDADDB(val):
     mycon.commit()
 
     mycon.close()
-    print(mycursor.rowcount, "record inserted.")
+    print("Duplicate LLA --" + val + " inserted in DAD Database" )
+    # print(mycursor.rowcount, "record inserted.")
 
 def fetchDataFromLLADB(val):
     mycon = connection(host, user, password, database)
@@ -102,9 +103,8 @@ def fetchDataFromLLADB(val):
 
     myresult = mycursor.fetchall()
 
-    print(sql)
-    print("Successful ", myresult)
-
+    # print(sql)
+    # print("Successful ", myresult)
     mycon.close()
     return myresult
     # print(myresult)
@@ -121,8 +121,8 @@ def fetchDataFromDADDB(val):
 
     myresult = mycursor.fetchall()
 
-    print(sql)
-    print("Successful ", myresult)
+    # print(sql)
+    # print("Successful ", myresult)
 
     mycon.close()
     return myresult
