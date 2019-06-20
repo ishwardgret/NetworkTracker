@@ -54,14 +54,17 @@ def processPacket():
             if str(targetAddress) != "fe80\:\:1":
                 # print(type(sourceLLA))
                 print("Target Address ->  ", targetAddress)
-
+                
                 fetchDuplication = db.fetchDataFromLLADB(targetAddress)
 
                 print(fetchDuplication)
                 if not fetchDuplication:
                     db.insertDataInLLADB(targetAddress)
                 else: 
-                    db.insertDataInDADDB(targetAddress)
+                    dublicateAddress = db.fetchDataFromDADDB(targetAddress)
+                    if not dublicateAddress:
+                        db.insertDataInDADDB(targetAddress)
+    
         
         elif icmpv6Type == "136":
             print("Link Local Address via NA -> ", packet.icmpv6.nd_na_target_address)
