@@ -1,7 +1,4 @@
-"""
-Copyright Ishwar Singh Bhandari 
-(c) ishwaryb@gmail.com 2019
-"""
+
 
 import pyshark
 import db
@@ -52,8 +49,7 @@ def processPacket():
             # print(type(targetAddress))
 
             if str(targetAddress) != "fe80\:\:1":
-                # print(type(sourceLLA))
-                print("Target Address ->  ", targetAddress)
+                print("Target Address via NS->  ", targetAddress)
 
                 fetchDuplication = db.fetchDataFromLLADB(targetAddress)
 
