@@ -2,7 +2,7 @@ import mysql.connector
 
 host='localhost'
 user='root'
-password='root'
+password='password'
 database='LLADADDB'
 
 def createDB():

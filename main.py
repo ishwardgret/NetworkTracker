@@ -5,8 +5,17 @@ Copyright Ishwar Singh Bhandari
 
 import pyshark
 import db
+import argparse
 
-interface = 'en0'
+
+
+# construct the argument parse and parse the arguments
+ap = argparse.ArgumentParser()
+ap.add_argument("-i", "--interface", required=True,
+	help="Name of network interface")
+args = vars(ap.parse_args())
+
+interface = args["interface"]
 
 def capturePackets(interface, time):
     """
@@ -29,7 +38,6 @@ def processPacket():
     2. Fetch ICMP type 
     3. find for neighbour solicitation 
     4. Insert  to db table 
-
     """
     # creating database 
     # db.createDB()
@@ -64,7 +72,7 @@ def processPacket():
                     db.insertDataInDADDB(targetAddress)
         
         elif icmpv6Type == "136":
-            print("Link Local Address via NA -> ", packet.icmpv6.nd_na_target_address)
+            print("Neighbour Advertisement Address -> ", packet.icmpv6.nd_na_target_address)
             neighbourAdAddress = packet.icmpv6.nd_na_target_address
 
             fetchAdAddress = db.fetchDataFromDADDB(neighbourAdAddress)

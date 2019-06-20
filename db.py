@@ -4,15 +4,15 @@ import mysql.connector
 
 host='localhost'
 user='root'
-password='root'
+password='password'
 database='LLADADDB'
 
 def connection(host, user, password, database=None):
     if database is None:
-        # print("1")
+        # print("For db creation")
         myConnection = mysql.connector.connect(host=host, user=user, password=password)
     else:
-        # print("2")
+        # print("For db")
         myConnection = mysql.connector.connect(host=host, user=user, password=password, database=database)
 
     return myConnection
@@ -22,8 +22,7 @@ def createDB():
     mycursor = mycon.cursor()
 
     mycursor.execute("CREATE DATABASE IF NOT EXISTS LLADADDB")
-    mycursor.execute("SHOW DATABASES")
-
+    # mycursor.execute("SHOW DATABASES")
     print(" Created Database ")
 
     mycon.close()
@@ -74,7 +73,7 @@ def insertDataInLLADB(val):
 
     mycon.commit()
 
-    print("Link Local Address --" + val + " inserted in LLA Database" )
+    print("Link Local Address via NS -- " + val + " inserted in LLA Database" )
 
     mycon.close()
 
@@ -90,7 +89,7 @@ def insertDataInDADDB(val):
     mycon.commit()
 
     mycon.close()
-    print("Duplicate LLA --" + val + " inserted in DAD Database" )
+    print("Duplicate LLA via NS --" + val + " inserted in DAD Database" )
     # print(mycursor.rowcount, "record inserted.")
 
 def fetchDataFromLLADB(val):
